@@ -6,81 +6,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * class Logic - отвечает за логику программы
+ * class LexAnalyze - отвечает за разбиение строки на лексемы
  *
  * @author K.P.Tishkovskaya
  * @version 1.1 17.02.2022
  */
 public class LexAnalyze {
+    public static ArrayList<Lexeme> lexemes = new ArrayList<>();
 
-    public enum LexemeType {
-        LEFT_BRACKET, RIGHT_BRACKET,
-        OP_PLUS, OP_MINUS, OP_MULTIPLICATION, OP_DIVISION,
-        NUMBER,
-        END_OF_LINE
-    }
-
-    public static class Lexeme {
-        LexemeType type;
-        String value;
-        int pos;
-
-        public List<Lexeme> lexemes;
-
-        public Lexeme(List<Lexeme> lexemes) {
-            this.lexemes = lexemes;
-        }
-
-
-        public Lexeme(LexemeType type, Character value) {
-            this.type = type;
-            this.value = value.toString();
-        }
-
-        public Lexeme(LexemeType type, String value) {
-            this.value = value;
-            this.type = type;
-        }
-
-        @Override
-        public String toString() {
-            return "Lexeme{" +
-                    "type=" + type +
-                    ", value='" + value + '\'' +
-                    '}';
-        }
-    }
-
-
+    /**
+     * Метод разбивает полученную строку на лексемы
+     * @param strExpression - строка, введённая пользователм
+     * @return список лексем
+     */
     public static List<Lexeme> lexemeBreaking(String strExpression) {
-        ArrayList<Lexeme> lexemes = new ArrayList<>();
         int pos = 0;
 
         while(pos < strExpression.length()) {
             char c = strExpression.charAt(pos);
             switch (c) {
                 case '(' :
-                    lexemes.add(new Lexeme(LexemeType.LEFT_BRACKET, c));
-                    pos++;
-                    continue;
                 case ')' :
-                    lexemes.add(new Lexeme(LexemeType.RIGHT_BRACKET, c));
-                    pos++;
-                    continue;
                 case '+' :
-                    lexemes.add(new Lexeme(LexemeType.OP_PLUS, c));
-                    pos++;
-                    continue;
                 case '-' :
-                    lexemes.add(new Lexeme(LexemeType.OP_MINUS, c));
-                    pos++;
-                    continue;
                 case '*' :
-                    lexemes.add(new Lexeme(LexemeType.OP_MULTIPLICATION, c));
-                    pos++;
-                    continue;
                 case '/' :
-                    lexemes.add(new Lexeme(LexemeType.OP_DIVISION, c));
+                    lexemes.add(new Lexeme(c));
                     pos++;
                     continue;
                 default:
@@ -94,7 +45,7 @@ public class LexAnalyze {
                             }
                             c = strExpression.charAt(pos);
                         } while (c <= '9' && c >= '0');
-                        lexemes.add(new Lexeme(LexemeType.NUMBER, strBuilder.toString()));
+                        lexemes.add(new Lexeme(strBuilder.toString()));
                     } else {
                         if (c != ' ') {
                             Printer.print("Вы ввели выражение неправильно");
@@ -103,7 +54,22 @@ public class LexAnalyze {
                     }
             }
         }
-        lexemes.add(new Lexeme(LexemeType.END_OF_LINE, ""));
         return lexemes;
+    }
+
+    /**
+     * Метод, который преобразует список в массив
+     * @param lexemes - список полученных лексем
+     * @return массив tokens
+     */
+    public static String[] listToArray(List<Lexeme> lexemes) {
+        String[] tokens;
+        tokens = new String[lexemes.size()];
+
+        for (int i=0;i< lexemes.size();i++){
+            tokens[i] = String.valueOf(lexemes.get(i).getValue());
+        }
+
+        return tokens;
     }
 }

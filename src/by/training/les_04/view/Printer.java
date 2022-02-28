@@ -9,7 +9,7 @@ package by.training.les_04.view;
 public class Printer {
     /**
      * метод, отвечающий за вывод данных
-     * @param str
+     * @param str - строка, вводимая пользователем
      */
     public static void print(Object str) {
         System.out.print(str);

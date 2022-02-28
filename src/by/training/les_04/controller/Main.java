@@ -2,6 +2,7 @@ package by.training.les_04.controller;
 
 import by.training.les_04.input.Input;
 import by.training.les_04.logic.LexAnalyze;
+import by.training.les_04.logic.Lexeme;
 import by.training.les_04.logic.SyntacticAnalyze;
 import by.training.les_04.view.Printer;
 
@@ -15,15 +16,19 @@ import java.util.List;
  */
 public class Main {
     public static void main(String[] args) {
+
         String strExpression;
         strExpression = Input.expressionInputByScanner("Введите выражение:");
 
-        List<LexAnalyze.Lexeme> lexemes = LexAnalyze.lexemeBreaking(strExpression);
+        //лексический разбор выражения
+        List<Lexeme> lexemes = LexAnalyze.lexemeBreaking(strExpression);
 
-        System.out.println(lexemes);
+        //создаём массив строк из полученного списка
+        String[] tokens = LexAnalyze.listToArray(lexemes);
 
-        LexAnalyze.Lexeme rez = new LexAnalyze.Lexeme(lexemes);
-        //Printer.print(factor(rez));
-        //System.out.println(Logic.expression(qwe));
+        //делаем синтаксический анализ выражения
+        double rez = SyntacticAnalyze.parse(tokens);
+
+        Printer.print(rez);
     }
 }
