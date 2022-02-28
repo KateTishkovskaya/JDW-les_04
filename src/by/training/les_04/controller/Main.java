@@ -1,8 +1,10 @@
 package by.training.les_04.controller;
 
-import by.training.les_04.logic.Logic;
+import by.training.les_04.input.Input;
+import by.training.les_04.logic.LexAnalyze;
+import by.training.les_04.logic.SyntacticAnalyze;
+import by.training.les_04.view.Printer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,14 +15,15 @@ import java.util.List;
  */
 public class Main {
     public static void main(String[] args) {
-        //String [] str = Input.expressionInputByScanner();
-        String strEx = "23+34 - 34";
-        List<Logic.Lexeme> lexemes = Logic.lexemeAnalyze(strEx);
+        String strExpression;
+        strExpression = Input.expressionInputByScanner("Введите выражение:");
 
-        System.out.println();
+        List<LexAnalyze.Lexeme> lexemes = LexAnalyze.lexemeBreaking(strExpression);
+
         System.out.println(lexemes);
 
-        Logic.Lexeme qwe = new Logic.Lexeme(lexemes);
-        System.out.println(Logic.expression(qwe));
+        LexAnalyze.Lexeme rez = new LexAnalyze.Lexeme(lexemes);
+        //Printer.print(factor(rez));
+        //System.out.println(Logic.expression(qwe));
     }
 }

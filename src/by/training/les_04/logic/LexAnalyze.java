@@ -11,7 +11,7 @@ import java.util.List;
  * @author K.P.Tishkovskaya
  * @version 1.1 17.02.2022
  */
-public class Logic {
+public class LexAnalyze {
 
     public enum LexemeType {
         LEFT_BRACKET, RIGHT_BRACKET,
@@ -19,7 +19,6 @@ public class Logic {
         NUMBER,
         END_OF_LINE
     }
-
 
     public static class Lexeme {
         LexemeType type;
@@ -31,11 +30,6 @@ public class Logic {
         public Lexeme(List<Lexeme> lexemes) {
             this.lexemes = lexemes;
         }
-
-        public Lexeme next() {
-            return lexemes.get(pos++);
-        }
-
 
 
         public Lexeme(LexemeType type, Character value) {
@@ -58,7 +52,7 @@ public class Logic {
     }
 
 
-    public static List<Lexeme> lexemeAnalyze(String strExpression) {
+    public static List<Lexeme> lexemeBreaking(String strExpression) {
         ArrayList<Lexeme> lexemes = new ArrayList<>();
         int pos = 0;
 
@@ -111,54 +105,5 @@ public class Logic {
         }
         lexemes.add(new Lexeme(LexemeType.END_OF_LINE, ""));
         return lexemes;
-    }
-
-    public static int expression(Lexeme lexemes) {
-        int value = term (lexemes);
-        while (true) {
-            Lexeme lexeme = lexemes.next();
-            switch (lexemes.type){
-                case OP_PLUS :
-                    value += term(lexemes);
-                    break;
-                case OP_MINUS:
-                    value -= term(lexemes);
-                    break;
-                default:
-                    Printer.print("Вы ввели выражение неверно");
-            }
-        }
-    }
-
-    public static int term(Lexeme lexemes) {
-        int value = factor(lexemes);
-        while (true) {
-            Lexeme lexeme = lexemes.next();
-            switch (lexemes.type){
-                case OP_MULTIPLICATION:
-                    value *= factor(lexemes);
-                    break;
-                case OP_DIVISION:
-                    value /= factor(lexemes);
-                    break;
-                default:
-                    Printer.print("Вы ввели выражение неверно");
-            }
-        }
-    }
-
-    public static int factor(Lexeme lexemes) {
-        Lexeme lexeme = lexemes.next();
-        switch (lexemes.type) {
-            case NUMBER:
-                return Integer.parseInt(lexemes.value);
-            case LEFT_BRACKET:
-                lexeme = lexemes.next();
-                int value = expression(lexemes);
-                return value;
-            default:
-                Printer.print("--------");
-        }
-        return 0;
     }
 }

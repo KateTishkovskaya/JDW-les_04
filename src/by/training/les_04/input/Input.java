@@ -15,26 +15,14 @@ public class Input {
      * метод, отвечающий за ввод выражения с клавиатуры
      * @return str - выражение, введённое пользователем
      */
-    public static String[] expressionInputByScanner() {
-        /*String str;
+    @SuppressWarnings(value = "unchecked")
+    public static String expressionInputByScanner(String stringInput) {
+        String str;
 
         Scanner input = new Scanner(System.in);
+        Printer.print(stringInput);
+
         str = input.nextLine();
-
-        Printer.print(str);
-
-        return str;*/
-        Scanner input = new Scanner(System.in);
-
-        int n = 0;
-        String [] str = new String[n];
-        str[n] = input.nextLine();
-
-        for (int i = 0; i < str.length; i++) {
-            n++;
-        }
-        System.out.print(n);
-        System.out.print(str);
 
         return str;
     }
